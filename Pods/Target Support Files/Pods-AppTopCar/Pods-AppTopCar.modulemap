@@ -1,0 +1,6 @@
+framework module Pods_AppTopCar {
+  umbrella header "Pods-AppTopCar-umbrella.h"
+
+  export *
+  module * { export * }
+}
