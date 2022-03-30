@@ -29,7 +29,19 @@ class ForgotView: UIView {
     lazy var emailTextField: UITextField = {
         let email = CustomTexField()
         email.placeholder = "E-mail"
+        email.keyboardType = .emailAddress
+        email.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
         return email
+    }()
+    
+    lazy var errorEmailLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.text = "Digite um e-mail válido"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red
+        return label
     }()
     
     lazy var forgotButton: UIButton = {
@@ -37,12 +49,40 @@ class ForgotView: UIView {
         button.setTitle("Recuperar", for: .normal)
         return button
     }()
+    
+    @objc private func handleEmailTextChange() {
+        forgotButton.isEnabled = shouldEnabledButton()
+        guard let text = emailTextField.text else { return }
+        if text.isValid(.email) {
+            
+            emailTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorEmailLabel.isHidden = true
+        } else {
+            emailTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorEmailLabel.isHidden = false
+            forgotButton.isEnabled = false
+        }
+        
+        if forgotButton.isEnabled {
+            forgotButton.alpha = 1
+        } else {
+            forgotButton.alpha = 0.5
+        }
+        
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         safeArea = layoutMarginsGuide
         setupView()
         delegates()
+    }
+    
+    private func shouldEnabledButton() -> Bool {
+        guard let email = emailTextField.text else {
+            return false
+        }
+        return email.isEmpty ? false : true
     }
     
     private func delegates() {
@@ -56,7 +96,7 @@ class ForgotView: UIView {
 
 extension ForgotView: CodeView {
     func buildViewHierarchy() {
-        self.addSubviews(logoImage, inforForgotLabel, emailTextField, forgotButton)
+        self.addSubviews(logoImage, inforForgotLabel, emailTextField, errorEmailLabel, forgotButton)
     }
     
     func setupConstraints() {
@@ -78,6 +118,11 @@ extension ForgotView: CodeView {
             emailTextField.topAnchor.constraint(equalTo: inforForgotLabel.bottomAnchor, constant: 30),
             emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            errorEmailLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 5),
+            errorEmailLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16)
         ])
         
         //Forgot Button

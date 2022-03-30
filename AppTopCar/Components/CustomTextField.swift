@@ -20,6 +20,8 @@ class CustomTexField: UITextField {
         heightAnchor.constraint(equalToConstant: 45).isActive = true
         backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
         isUserInteractionEnabled = true
+        autocapitalizationType = .none
+        autocorrectionType = .no
         leftViewMode = .always
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
     }

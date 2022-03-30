@@ -20,6 +20,8 @@ class ConfirmButton: UIButton {
         layer.cornerRadius = 8
         titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         heightAnchor.constraint(equalToConstant: 45).isActive = true
+        isEnabled = false
+        alpha = 0.5
         backgroundColor = .systemBlue
     }
     

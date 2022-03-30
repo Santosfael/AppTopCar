@@ -43,18 +43,41 @@ class SignInView: UIView {
         let input = CustomTexField()
         input.placeholder = "E-mail"
         input.autocorrectionType = .no
+        input.autocapitalizationType = .none
         input.keyboardType = .emailAddress
+        input.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
         return input
+    }()
+    
+    lazy var errorEmailLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.text = "Digite um e-mail válido"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red
+        return label
     }()
     
     lazy private var passwordTextField: UITextField = {
         let input = CustomTexField()
         input.placeholder = "Senha"
         input.autocapitalizationType = .none
-        //input.isSecureTextEntry = true
+        input.isSecureTextEntry = true
+        input.autocapitalizationType = .none
         input.autocorrectionType = .no
-        input.addTarget(self, action: #selector(hiddenLogo), for: .editingDidBegin)
+        //input.addTarget(self, action: #selector(hiddenLogo), for: .editingDidBegin)
+        input.addTarget(self, action: #selector(handlePasswordChange), for: .editingChanged)
         return input
+    }()
+    
+    lazy var errorPasswordLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red
+        return label
     }()
     
     lazy private var forgotButton: UIButton = {
@@ -70,6 +93,8 @@ class SignInView: UIView {
         let button = ConfirmButton()
         button.setTitle("Login", for: .normal)
         button.addTarget(self, action: #selector(loginButton), for: .touchUpInside)
+        button.isEnabled = false
+        button.alpha = 0.5
         return button
     }()
     
@@ -131,6 +156,56 @@ class SignInView: UIView {
         handlerSignUpButton?()
     }
     
+    @objc private func handleEmailTextChange() {
+        signInButton.isEnabled = shouldEnabledButton()
+        guard let text = emailTextField.text else { return }
+        if text.isValid(.email) {
+            
+            emailTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorEmailLabel.isHidden = true
+        } else {
+            emailTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorEmailLabel.isHidden = false
+            signInButton.isEnabled = shouldEnabledButton()
+            signInButton.alpha = 0.5
+        }
+        
+        if signInButton.isEnabled {
+            signInButton.alpha = 1
+        } else {
+            signInButton.alpha = 0.5
+        }
+        
+    }
+    
+    @objc private func handlePasswordChange() {
+        //signInButton.isEnabled = shouldEnabledButton()
+        guard let text = passwordTextField.text else { return }
+        if text.isValid(.password) {
+            
+            passwordTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorPasswordLabel.isHidden = true
+            signInButton.isEnabled = shouldEnabledButton()
+        } else {
+            passwordTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorPasswordLabel.isHidden = false
+            signInButton.isEnabled = false
+            
+            if text.count < 8 {
+                errorPasswordLabel.text = "A senha tem que ter no minimo 8 Caracteres"
+            } else {
+                errorPasswordLabel.text = "A senha tem que ter letra maiuscula, minuscula e números"
+            }
+        }
+        
+        if signInButton.isEnabled {
+            signInButton.alpha = 1
+        } else {
+            signInButton.alpha = 0.5
+        }
+        
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         safeArea = self.layoutMarginsGuide
@@ -138,6 +213,15 @@ class SignInView: UIView {
         self.setupKeyboardHiding()
         delegates()
     }
+    
+    private func shouldEnabledButton() -> Bool {
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            return false
+        }
+        return email.isEmpty || password.isEmpty ? false : true
+    }
+    
+    //protocol para validação
     
     private func delegates() {
         emailTextField.delegate = self
@@ -153,7 +237,7 @@ class SignInView: UIView {
 extension SignInView: CodeView {
     func buildViewHierarchy() {
         self.addSubviews(logoImage, loginLabel, infoLabel, gridContainer, forgotButton, signInButton, containerSignUpStack)
-        self.gridContainer.addArrangedSubviews(emailTextField, passwordTextField)
+        self.gridContainer.addArrangedSubviews(emailTextField, errorEmailLabel, passwordTextField, errorPasswordLabel)
         self.containerSignUpStack.addArrangedSubviews(signUpLabel, signUpButton)
         //self.addSubview(button)
     }
