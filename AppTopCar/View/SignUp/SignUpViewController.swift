@@ -20,6 +20,14 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        handlerScreensSignIn()
+    }
+    
+    private func handlerScreensSignIn() {
+        signUp.handlerSignUpButton = {
+            let homeViewController = HomeViewController()
+            self.navigationController?.pushViewController(homeViewController, animated: true)
+        }
     }
 
 }

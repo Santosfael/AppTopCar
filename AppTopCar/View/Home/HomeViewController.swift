@@ -10,21 +10,43 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    lazy var homeLabel: UILabel = {
+    lazy var userName: UILabel = {
         let label = CustomLabel()
-        label.text = "Bem vindo"
+        return label
+    }()
+    
+    lazy var button: UIButton = {
+        let label = ConfirmButton()
+        label.setTitle("Logout", for: .normal)
+        label.isEnabled = true
+        label.alpha = 1
+        label.addTarget(self, action: #selector(logout), for: .touchUpInside)
         return label
     }()
     
     override func loadView() {
         super.loadView()
         
-        view.addSubview(homeLabel)
+        //userName.text = UserDefaults.standard.value(forKey: "userFullname") as! String
+        
+        view.addSubview(button)
+        view.addSubview(userName)
         
         NSLayoutConstraint.activate([
-            homeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            homeLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+        
+        NSLayoutConstraint.activate([
+            userName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            userName.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+        ])
+    }
+    
+    @objc func logout() {
+        UserService.shared.logout()
+        navigationController?.pushViewController(SignInViewController(), animated: true)
     }
 
     override func viewDidLoad() {

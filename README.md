@@ -13,11 +13,17 @@ O projeto consiste em: Login, Cadastre-se, Home e Recuperar senha
 * View code
 * Xcode 13.2.1
 
+## Bibliotecas instaladas via pod
+* Firebase
+    * Authenticate
+    * Firestore
+* TransitionButton
+
 ## O que será implementado
-* Validação de do campus
-* Autenticação com o firebase
-    * Login, Cadastro e recuperar
-* Salvar dados como nome do usuário no firestore
+- [x] Validação de do campus
+- [x] Autenticação com o firebase
+    - [x] Login, Cadastro e recuperar
+- [x] Salvar dados como nome do usuário no firestore
 * Cadastrar imagem para o perfil do usuário
 * Editar perfil
 

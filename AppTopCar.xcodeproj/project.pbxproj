@@ -35,6 +35,12 @@
 		265FEF8E27F3573B009199F1 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265FEF8D27F3573B009199F1 /* SignUpView.swift */; };
 		265FEF9027F37165009199F1 /* KeyboardShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265FEF8F27F37165009199F1 /* KeyboardShow.swift */; };
 		267E4D2E27F484BD00019B7E /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267E4D2D27F484BD00019B7E /* String+extensions.swift */; };
+		2680EDA727F74D7800DB139D /* TransactionCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2680EDA627F74D7800DB139D /* TransactionCustomButton.swift */; };
+		26A8E4CA27F6127F00DC8B6E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8E4C927F6127F00DC8B6E /* User.swift */; };
+		26A8E4CD27F612E800DC8B6E /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8E4CC27F612E800DC8B6E /* UserServiceProtocol.swift */; };
+		26A8E4CF27F613AB00DC8B6E /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8E4CE27F613AB00DC8B6E /* HTTPMethod.swift */; };
+		26A8E4D127F6142100DC8B6E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8E4D027F6142100DC8B6E /* UserService.swift */; };
+		26A8E4D327F6169B00DC8B6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */; };
 		3B7082CD0797583F7A36EB97 /* Pods_AppTopCar_AppTopCarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF6DE2A763E797DDA6A3CF3 /* Pods_AppTopCar_AppTopCarUITests.framework */; };
 		6E34892E483D459CB10A7743 /* Pods_AppTopCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FDAE4133390A24D0FECDA87 /* Pods_AppTopCar.framework */; };
 		D9365748B69EC4ECB63738C2 /* Pods_AppTopCarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06194A569BE11CA93865D49F /* Pods_AppTopCarTests.framework */; };
@@ -92,6 +98,12 @@
 		265FEF8D27F3573B009199F1 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		265FEF8F27F37165009199F1 /* KeyboardShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShow.swift; sourceTree = "<group>"; };
 		267E4D2D27F484BD00019B7E /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		2680EDA627F74D7800DB139D /* TransactionCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCustomButton.swift; sourceTree = "<group>"; };
+		26A8E4C927F6127F00DC8B6E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		26A8E4CC27F612E800DC8B6E /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
+		26A8E4CE27F613AB00DC8B6E /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		26A8E4D027F6142100DC8B6E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		28233397752204C9F8E6E0A7 /* Pods-AppTopCar-AppTopCarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTopCar-AppTopCarUITests.debug.xcconfig"; path = "Target Support Files/Pods-AppTopCar-AppTopCarUITests/Pods-AppTopCar-AppTopCarUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		637DD0FE7B631B89E38E192A /* Pods-AppTopCar-AppTopCarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTopCar-AppTopCarUITests.release.xcconfig"; path = "Target Support Files/Pods-AppTopCar-AppTopCarUITests/Pods-AppTopCar-AppTopCarUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6BF6DE2A763E797DDA6A3CF3 /* Pods_AppTopCar_AppTopCarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppTopCar_AppTopCarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,12 +246,13 @@
 		265AAA9127EA11C000EFCC04 /* AppTopCar */ = {
 			isa = PBXGroup;
 			children = (
+				26A8E4D427F61BE200DC8B6E /* Application */,
+				26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */,
+				26A8E4C627F610D700DC8B6E /* Services */,
 				263475D727F1F7210003B0FC /* Commons */,
 				265AAACF27EA165C00EFCC04 /* Components */,
 				265AAAC427EA120100EFCC04 /* View */,
-				265AAAC227EA11F200EFCC04 /* Model */,
-				265AAA9227EA11C000EFCC04 /* AppDelegate.swift */,
-				265AAA9427EA11C000EFCC04 /* SceneDelegate.swift */,
+				265AAAC227EA11F200EFCC04 /* Models */,
 				265AAA9B27EA11C100EFCC04 /* Assets.xcassets */,
 				265AAA9D27EA11C100EFCC04 /* LaunchScreen.storyboard */,
 				265AAAA027EA11C100EFCC04 /* Info.plist */,
@@ -264,11 +277,12 @@
 			path = AppTopCarUITests;
 			sourceTree = "<group>";
 		};
-		265AAAC227EA11F200EFCC04 /* Model */ = {
+		265AAAC227EA11F200EFCC04 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				26A8E4C927F6127F00DC8B6E /* User.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		265AAAC427EA120100EFCC04 /* View */ = {
@@ -292,8 +306,36 @@
 				263475E627F23C300003B0FC /* CustomLabel.swift */,
 				263475E827F23CEA0003B0FC /* CustomButton.swift */,
 				263475EA27F249C50003B0FC /* CustomHorizontalStackView.swift */,
+				2680EDA627F74D7800DB139D /* TransactionCustomButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		26A8E4C627F610D700DC8B6E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				26A8E4C727F610E700DC8B6E /* Requests */,
+				26A8E4CC27F612E800DC8B6E /* UserServiceProtocol.swift */,
+				26A8E4D027F6142100DC8B6E /* UserService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		26A8E4C727F610E700DC8B6E /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				26A8E4CE27F613AB00DC8B6E /* HTTPMethod.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		26A8E4D427F61BE200DC8B6E /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				265AAA9227EA11C000EFCC04 /* AppDelegate.swift */,
+				265AAA9427EA11C000EFCC04 /* SceneDelegate.swift */,
+			);
+			path = Application;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				265AAA9F27EA11C100EFCC04 /* LaunchScreen.storyboard in Resources */,
+				26A8E4D327F6169B00DC8B6E /* GoogleService-Info.plist in Resources */,
 				265AAA9C27EA11C100EFCC04 /* Assets.xcassets in Resources */,
 				265AAAC727EA128400EFCC04 /* Podfile in Resources */,
 			);
@@ -541,14 +584,18 @@
 				267E4D2E27F484BD00019B7E /* String+extensions.swift in Sources */,
 				265FEF9027F37165009199F1 /* KeyboardShow.swift in Sources */,
 				263475DE27F1F89E0003B0FC /* CustomVerticalStack.swift in Sources */,
+				26A8E4D127F6142100DC8B6E /* UserService.swift in Sources */,
+				2680EDA727F74D7800DB139D /* TransactionCustomButton.swift in Sources */,
 				263475EB27F249C50003B0FC /* CustomHorizontalStackView.swift in Sources */,
 				263475EF27F254F40003B0FC /* SignUpViewController.swift in Sources */,
+				26A8E4CF27F613AB00DC8B6E /* HTTPMethod.swift in Sources */,
 				263475ED27F254110003B0FC /* ForgotViewController.swift in Sources */,
 				263475E927F23CEA0003B0FC /* CustomButton.swift in Sources */,
 				265AAA9327EA11C000EFCC04 /* AppDelegate.swift in Sources */,
 				263475E327F1FBF60003B0FC /* CustomLogoImageView.swift in Sources */,
 				265AAACE27EA15EA00EFCC04 /* CodeView.swift in Sources */,
 				263475F127F260A40003B0FC /* ForgotView.swift in Sources */,
+				26A8E4CD27F612E800DC8B6E /* UserServiceProtocol.swift in Sources */,
 				265FEF8C27F34260009199F1 /* UIResponder+extensions.swift in Sources */,
 				263475E027F1F91A0003B0FC /* CustomTextField.swift in Sources */,
 				263475E527F225CE0003B0FC /* ConfirmButton.swift in Sources */,
@@ -557,6 +604,7 @@
 				263475DA27F1F76C0003B0FC /* UIView+extensions.swift in Sources */,
 				265AAA9527EA11C000EFCC04 /* SceneDelegate.swift in Sources */,
 				265AAAC927EA14D900EFCC04 /* HomeViewController.swift in Sources */,
+				26A8E4CA27F6127F00DC8B6E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

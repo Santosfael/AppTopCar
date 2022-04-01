@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TransitionButton
 
 class ForgotView: UIView {
     
@@ -44,9 +45,10 @@ class ForgotView: UIView {
         return label
     }()
     
-    lazy var forgotButton: UIButton = {
-        let button = ConfirmButton()
+    lazy var forgotButton: TransitionButton = {
+        let button = TransactionCustomButton()
         button.setTitle("Recuperar", for: .normal)
+        button.addTarget(self, action: #selector(handlerForgotPassword), for: .touchUpInside)
         return button
     }()
     
@@ -60,13 +62,42 @@ class ForgotView: UIView {
         } else {
             emailTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
             errorEmailLabel.isHidden = false
-            forgotButton.isEnabled = false
+            forgotButton.isEnabled = true
         }
         
         if forgotButton.isEnabled {
             forgotButton.alpha = 1
         } else {
             forgotButton.alpha = 0.5
+        }
+        
+    }
+    
+    var forgotPassword: (() -> Void)?
+    
+    @objc func handlerForgotPassword() {
+        forgotButton.startAnimation()
+        UserService.shared.forgot(email: emailTextField.text!) { result in
+            switch result {
+                
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.forgotButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 2) {
+                        self.alertInfo(title: "Recuperar senha", message: "As informações para recuperar senha foi encaminhado para o e-mail cadastrado")
+                    }
+                    self.forgotPassword?()
+                }
+                
+                
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.forgotButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 2) {
+                        self.alertInfo(title: "Recuperar senha", message: "E-mail incorreto ou não existe")
+                        self.forgotButton.cornerRadius = 8
+                    }
+                }
+                
+            }
         }
         
     }
@@ -135,7 +166,7 @@ extension ForgotView: CodeView {
     }
     
     func setupAdditionalConfiguration() {
-        
+        backgroundColor = .systemBackground
     }
 }
 

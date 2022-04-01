@@ -19,7 +19,11 @@ class ForgotViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Esqueci a senha"
-        view.backgroundColor = .systemBackground
+        
+        forgotView.forgotPassword = {
+            let signInViewController = SignInViewController()
+            self.navigationController?.pushViewController(signInViewController, animated: true)
+        }
     }
 
 }

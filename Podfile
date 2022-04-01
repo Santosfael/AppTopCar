@@ -6,6 +6,9 @@ target 'AppTopCar' do
   use_frameworks!
 
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'TransitionButton'
 
   target 'AppTopCarTests' do
     inherit! :search_paths

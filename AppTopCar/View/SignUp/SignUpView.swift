@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TransitionButton
 
 class SignUpView: UIView {
     
@@ -89,9 +90,10 @@ class SignUpView: UIView {
         logoImage.isHidden = true
     }
     
-    lazy var signUpButton: UIButton = {
-        let button = ConfirmButton()
+    lazy var signUpButton: TransitionButton = {
+        let button = TransactionCustomButton()
         button.setTitle("Continue", for: .normal)
+        button.addTarget(self, action: #selector(handlerCreateUser), for: .touchUpInside)
         button.isEnabled = false
         button.alpha = 0.5
         return button
@@ -178,6 +180,37 @@ class SignUpView: UIView {
         }
         
     }
+    
+    var handlerSignUpButton: (() -> Void)?
+    
+    @objc func handlerCreateUser() {
+        signUpButton.startAnimation()
+        let fullname = fullNameTextField.text!
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
+        let user = User(id: "", fullname: fullname, email: email, password: password)
+        
+        UserService.shared.signUp(user: user) { result in
+            switch result {
+            case .success(let user):
+                UserDefaults.standard.set(user.email, forKey: "keyUserEmail")
+                UserDefaults.standard.set(user.fullname, forKey: "keyUserName")
+                
+                DispatchQueue.main.async {
+                    self.signUpButton.stopAnimation()
+                    self.handlerSignUpButton?()
+                }
+                
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.signUpButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 2) {
+                        self.alertInfo(title: "Cadastrar", message: "Você não está conectado a internet")
+                        self.signUpButton.cornerRadius = 8
+                    }
+                }
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -242,7 +275,7 @@ extension SignUpView: CodeView {
     }
     
     func setupAdditionalConfiguration() {
-        
+        self.backgroundColor = .systemBackground
     }
 }
 

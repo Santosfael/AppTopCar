@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import TransitionButton
 
 class SignInView: UIView {
     
@@ -89,8 +90,9 @@ class SignInView: UIView {
         return button
     }()
     
-    lazy private var signInButton: UIButton = {
-        let button = ConfirmButton()
+    
+    lazy private var signInButton: TransitionButton = {
+        let button = TransactionCustomButton()
         button.setTitle("Login", for: .normal)
         button.addTarget(self, action: #selector(loginButton), for: .touchUpInside)
         button.isEnabled = false
@@ -145,7 +147,31 @@ class SignInView: UIView {
     var handlerSignUpButton: (() -> Void)?
     
     @IBAction private func loginButton() {
-        handlerHomeButton?()
+        signInButton.startAnimation()
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
+        let user = User(id: "", fullname: "", email: email, password: password)
+        UserService.shared.signIn(user: user) { result in
+            switch result {
+            case .success(let user):
+                UserDefaults.standard.set(user.email, forKey: "keyUserEmail")
+                UserDefaults.standard.set(user.fullname, forKey: "keyUserName")
+                
+                DispatchQueue.main.async {
+                    self.signInButton.stopAnimation()
+                    self.handlerHomeButton?()
+                }
+                
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.signInButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 2) {
+                        self.alertInfo(title: "Login", message: "E-mail não cadastrado, ou e-mail e senha incorreto")
+                        self.signInButton.cornerRadius = 8
+                    }
+                }
+                
+            }
+        }
     }
     
     @IBAction private func forgotHandlerButton() {
@@ -209,8 +235,8 @@ class SignInView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         safeArea = self.layoutMarginsGuide
-        setupView()
         self.setupKeyboardHiding()
+        setupView()
         delegates()
     }
     
