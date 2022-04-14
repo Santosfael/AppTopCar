@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         if FirebaseAuth.Auth.auth().currentUser != nil {
-            viewController = HomeViewController()
+            viewController = TabBarViewController()
         } else {
             viewController = SignInViewController()
         }

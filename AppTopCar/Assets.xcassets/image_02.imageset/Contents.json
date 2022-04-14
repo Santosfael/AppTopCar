@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "higienizacao_interna.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

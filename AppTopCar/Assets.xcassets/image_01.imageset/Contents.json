@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "detail_roda.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
