@@ -52,6 +52,8 @@
 		26A8E4CF27F613AB00DC8B6E /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8E4CE27F613AB00DC8B6E /* HTTPMethod.swift */; };
 		26A8E4D127F6142100DC8B6E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A8E4D027F6142100DC8B6E /* UserService.swift */; };
 		26A8E4D327F6169B00DC8B6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */; };
+		26A91700280C9B8400EB6D76 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A916FF280C9B8400EB6D76 /* Services.swift */; };
+		26A91702280C9C7C00EB6D76 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A91701280C9C7C00EB6D76 /* CategoryService.swift */; };
 		3B7082CD0797583F7A36EB97 /* Pods_AppTopCar_AppTopCarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF6DE2A763E797DDA6A3CF3 /* Pods_AppTopCar_AppTopCarUITests.framework */; };
 		D9365748B69EC4ECB63738C2 /* Pods_AppTopCarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06194A569BE11CA93865D49F /* Pods_AppTopCarTests.framework */; };
 /* End PBXBuildFile section */
@@ -137,6 +139,8 @@
 		26A8E4CE27F613AB00DC8B6E /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		26A8E4D027F6142100DC8B6E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		26A916FF280C9B8400EB6D76 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		26A91701280C9C7C00EB6D76 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		28233397752204C9F8E6E0A7 /* Pods-AppTopCar-AppTopCarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTopCar-AppTopCarUITests.debug.xcconfig"; path = "Target Support Files/Pods-AppTopCar-AppTopCarUITests/Pods-AppTopCar-AppTopCarUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		637DD0FE7B631B89E38E192A /* Pods-AppTopCar-AppTopCarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTopCar-AppTopCarUITests.release.xcconfig"; path = "Target Support Files/Pods-AppTopCar-AppTopCarUITests/Pods-AppTopCar-AppTopCarUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6BF6DE2A763E797DDA6A3CF3 /* Pods_AppTopCar_AppTopCarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppTopCar_AppTopCarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,6 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				26A8E4C927F6127F00DC8B6E /* User.swift */,
+				26A916FF280C9B8400EB6D76 /* Services.swift */,
+				26A91701280C9C7C00EB6D76 /* CategoryService.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -754,6 +760,7 @@
 				267E4D2E27F484BD00019B7E /* String+extensions.swift in Sources */,
 				265FEF9027F37165009199F1 /* KeyboardShow.swift in Sources */,
 				263475DE27F1F89E0003B0FC /* CustomVerticalStack.swift in Sources */,
+				26A91702280C9C7C00EB6D76 /* CategoryService.swift in Sources */,
 				26A8E4D127F6142100DC8B6E /* UserService.swift in Sources */,
 				2680EDA727F74D7800DB139D /* TransactionCustomButton.swift in Sources */,
 				263475EB27F249C50003B0FC /* CustomHorizontalStackView.swift in Sources */,
@@ -771,6 +778,7 @@
 				26A8E4CD27F612E800DC8B6E /* UserServiceProtocol.swift in Sources */,
 				265FEF8C27F34260009199F1 /* UIResponder+extensions.swift in Sources */,
 				263475E027F1F91A0003B0FC /* CustomTextField.swift in Sources */,
+				26A91700280C9B8400EB6D76 /* Services.swift in Sources */,
 				263475E527F225CE0003B0FC /* ConfirmButton.swift in Sources */,
 				26525DB328088EED008A288C /* CategoryCollectionViewCell.swift in Sources */,
 				2676D9412801276300F0982D /* MapNativeView.swift in Sources */,

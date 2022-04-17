@@ -11,37 +11,66 @@ class CustomTableViewCell: UITableViewCell {
     
     static let identifier = "CustomTableViewCell"
     
-    lazy private var serviceImage: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(systemName: "house")
-        image.contentMode = .scaleAspectFit
-        return image
+    private var categoryService = [CategoryService]()
+    private var services = [Service]()
+    
+    lazy private var serviceByCategoryCollectionView: UICollectionView = {
+        let layout = collectionLayout()
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
+        collection.isScrollEnabled = true
+        return collection
     }()
     
-    lazy private var inforServiceStack: CustomVerticalStack = {
-        let stack = CustomVerticalStack()
-        stack.contentMode = .top
-        return stack
-    }()
-    
-    lazy private var titleLabel: CustomLabel = {
-        let label = CustomLabel()
-        label.text = "Rafael"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+    lazy var titleCategoryLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
-    lazy private var descriptionLabel: CustomLabel = {
-        let label = CustomLabel()
-        label.text = "Rocha dos Santos"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        return label
-    }()
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupService()
         setupView()
+        register()
+        delegates()
+    }
+    
+    private func delegates() {
+        serviceByCategoryCollectionView.delegate = self
+        serviceByCategoryCollectionView.dataSource = self
+    }
+    
+    private func register() {
+        serviceByCategoryCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+    }
+    
+    private func setupService() {
+        services = [
+            Service(id: "1", name: "Detail", thumbnail: "image_01"),
+            Service(id: "2", name: "Polimento", thumbnail: "image_02"),
+            Service(id: "3", name: "Cristalização", thumbnail: "image_03"),
+            Service(id: "4", name: "Lavagem", thumbnail: "image_04"),
+            Service(id: "5", name: "Detail", thumbnail: "image_01"),
+            Service(id: "6", name: "Polimento", thumbnail: "image_02"),
+            Service(id: "7", name: "Cristalização", thumbnail: "image_03"),
+            Service(id: "8", name: "Lavagem", thumbnail: "image_04"),
+        ]
+    }
+    
+    public func configure(with models: CategoryService) {
+        titleCategoryLabel.text = models.title
+        serviceByCategoryCollectionView.reloadData()
+    }
+    
+    private func collectionLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
+        return layout
     }
     
     required init?(coder: NSCoder) {
@@ -52,29 +81,51 @@ class CustomTableViewCell: UITableViewCell {
 
 extension CustomTableViewCell: CodeView {
     func buildViewHierarchy() {
-        addSubviews(serviceImage, inforServiceStack)
-        inforServiceStack.addArrangedSubviews(titleLabel, descriptionLabel)
+        contentView.addSubviews(titleCategoryLabel, serviceByCategoryCollectionView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            serviceImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            serviceImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            serviceImage.widthAnchor.constraint(equalToConstant: 45),
-            serviceImage.heightAnchor.constraint(equalToConstant: 45)
-            
+            titleCategoryLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleCategoryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleCategoryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
         ])
         
         NSLayoutConstraint.activate([
-            inforServiceStack.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            inforServiceStack.leadingAnchor.constraint(equalTo: serviceImage.trailingAnchor, constant: 16),
-            inforServiceStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            inforServiceStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+            serviceByCategoryCollectionView.topAnchor.constraint(equalTo: titleCategoryLabel.bottomAnchor),
+            serviceByCategoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            serviceByCategoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            serviceByCategoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     func setupAdditionalConfiguration() {
-        
+       
+    }
+    
+    
+}
+
+extension CustomTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return services.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let model = services[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
+        cell.configure(with: model)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (self.safeAreaLayoutGuide.layoutFrame.width), height: (self.safeAreaLayoutGuide.layoutFrame.height - 50))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        print("Cliquei")
     }
     
     

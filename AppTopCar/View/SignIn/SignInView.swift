@@ -140,7 +140,7 @@ class SignInView: UIView {
     }
     
     //Essa variavel é chamada na SignIn controller e recebe a navegação da pagina
-    var handlerHomeButton: (() -> Void)?
+    var handleHomeButton: (() -> Void)?
     
     var handlerForgotButton: (() -> Void)?
     
@@ -159,7 +159,7 @@ class SignInView: UIView {
                 
                 DispatchQueue.main.async {
                     self.signInButton.stopAnimation()
-                    self.handlerHomeButton?()
+                    self.handleHomeButton?()
                 }
                 
             case .failure(_):

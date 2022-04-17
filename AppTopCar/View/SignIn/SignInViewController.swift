@@ -22,8 +22,8 @@ class SignInViewController: UIViewController {
     }
     
     private func handlerScreensSignIn() {
-        signInView.handlerHomeButton = {
-            let homeController = HomeViewController()
+        signInView.handleHomeButton = {
+            let homeController = TabBarViewController()
             self.navigationController?.pushViewController(homeController, animated: true)
         }
         

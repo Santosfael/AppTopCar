@@ -9,17 +9,22 @@ import Foundation
 import UIKit
 
 class HomeViewController: UIViewController {
-    
-    private let servicesTableView = ServicesTableView()
+
+    private let serviceTableView = ServicesTableView()
     
     override func loadView() {
         super.loadView()
-        super.view = servicesTableView
+        self.view = serviceTableView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        serviceTableView.frame = view.bounds
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,11 +32,4 @@ class HomeViewController: UIViewController {
        // Hide the Navigation Bar
        self.navigationController?.setNavigationBarHidden(true, animated: true)
    }
-
-//   override func viewWillDisappear(_ animated: Bool) {
-//       super.viewWillDisappear(true)
-//       // Show the Navigation Bar
-//       self.navigationController?.setNavigationBarHidden(false, animated: false)
-//   }
 }
-

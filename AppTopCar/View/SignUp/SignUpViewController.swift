@@ -25,7 +25,7 @@ class SignUpViewController: UIViewController {
     
     private func handlerScreensSignIn() {
         signUp.handlerSignUpButton = {
-            let homeViewController = HomeViewController()
+            let homeViewController = TabBarViewController()
             self.navigationController?.pushViewController(homeViewController, animated: true)
         }
     }

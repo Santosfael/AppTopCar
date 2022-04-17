@@ -18,12 +18,16 @@ O projeto consiste em: Login, Cadastre-se, Home e Recuperar senha
     * Authenticate
     * Firestore
 * TransitionButton
+* GoogleMap - 6.1.1
 
 ## O que será implementado
 - [x] Validação de do campus
 - [x] Autenticação com o firebase
     - [x] Login, Cadastro e recuperar
 - [x] Salvar dados como nome do usuário no firestore
+- [x] Implementação da tabBar navigation
+- [x] Implementação test do GoogleMap
+- [x] Implementação Collection View dentro da Table View
 * Cadastrar imagem para o perfil do usuário
 * Editar perfil
 

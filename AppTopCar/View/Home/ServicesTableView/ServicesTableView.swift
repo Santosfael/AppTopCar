@@ -10,18 +10,27 @@ import UIKit
 class ServicesTableView: UIView {
 
     lazy var servicesTableView: UITableView = {
-        let table = UITableView()
+        let table = UITableView(frame: .zero)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
-    private var models = [Model]()
+    private var categoryService = [CategoryService]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
-        delegates()
+        categoryService = [CategoryService(id: "1", title: "Lavagens"),
+                           CategoryService(id: "2", title: "Details"),
+                           CategoryService(id: "3", title: "Higienização"),
+                           CategoryService(id: "4", title: "Polimento")]
         register()
+        delegates()
+        setupView()
+        
+    }
+    
+    override func layoutSubviews() {
+        servicesTableView.frame = self.bounds
     }
     
     private func delegates() {
@@ -46,8 +55,8 @@ extension ServicesTableView: CodeView {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             servicesTableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0),
-            servicesTableView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            servicesTableView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            servicesTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            servicesTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             servicesTableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
@@ -58,27 +67,22 @@ extension ServicesTableView: CodeView {
 }
 
 extension ServicesTableView: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
+        return categoryService.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
-        
+        guard let cell = servicesTableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
+        cell.configure(with: categoryService[indexPath.row])
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-}
-
-struct Model {
-    let text: String
-    let imageName: String
     
-    init(text: String, imageName: String) {
-        self.text = text
-        self.imageName = imageName
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 260
     }
 }

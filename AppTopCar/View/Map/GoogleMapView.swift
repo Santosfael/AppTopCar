@@ -83,8 +83,8 @@ extension GoogleMapView: CLLocationManagerDelegate {
 
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: locationManager.location?.coordinate.latitude ?? -18.9550696, longitude: locationManager.location?.coordinate.longitude ?? -46.9875781)
-        marker.title = "Mey Hi"
-        marker.snippet = "Im here"
+        marker.title = "Lava-rápido"
+        marker.snippet = "Lava-rápido"
         marker.map = mapView
     }
     
