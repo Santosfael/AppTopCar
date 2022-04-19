@@ -1,39 +1,22 @@
 //
-//  SignUpView.swift
+//  StepSecoundSignUpView.swift
 //  AppTopCar
 //
-//  Created by Idwall Go Dev 008 on 29/03/22.
+//  Created by Idwall Go Dev 008 on 18/04/22.
 //
+
+import UIKit
 
 import UIKit
 import TransitionButton
 
-class SignUpView: UIView {
+class StepSecoundSignUpView: UIView {
     
     private var safeArea: UILayoutGuide!
     
-    lazy var titleCardLabel: CustomLabel = {
-        let label = CustomLabel()
-        label.text = "Crie uma conta gratuíta"
-        label.numberOfLines = 2
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        return label
-    }()
-    
-    lazy private var subTitleCadLabel: CustomLabel = {
-        let label = CustomLabel()
-        label.text = "Preencha as informações para criar uma conta e clique em continuar"
-        label.numberOfLines = 2
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
-        return label
-    }()
-    
     lazy private var infoCadLabel: CustomLabel = {
         let label = CustomLabel()
-        label.text = "01. Quem é você?"
+        label.text = "02. E-mail e Senha"
         label.numberOfLines = 2
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.90)
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
@@ -43,32 +26,6 @@ class SignUpView: UIView {
     lazy private var containerStack: CustomVerticalStack = {
         let stack = CustomVerticalStack()
         return stack
-    }()
-    
-    lazy private var fullNameTextField: CustomTexField = {
-        let text = CustomTexField()
-        text.autocapitalizationType = .words
-        text.placeholder = "Seu nome completo"
-        text.addTarget(self, action: #selector(handleFullNameTextChange), for: .editingChanged)
-        return text
-    }()
-    
-    lazy var errorFullNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isHidden = true
-        label.text = "Digite seu nome completo"
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = .red
-        return label
-    }()
-    
-    lazy private var foneTextField: UITextField = {
-        let email = CustomTexField()
-        email.keyboardType = .emailAddress
-        email.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
-        email.placeholder = "Celular"
-        return email
     }()
     
     lazy private var emailTextField: UITextField = {
@@ -128,26 +85,6 @@ class SignUpView: UIView {
         self.frame.origin.y = keyboardShow.shared.keyboardWillHide(notification: notification)
     }
     
-    @objc private func handleFullNameTextChange() {
-        guard let text = fullNameTextField.text else { return }
-        if text.isValid(.fullName) {
-            
-            fullNameTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-            errorFullNameLabel.isHidden = true
-        } else {
-            fullNameTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
-            errorFullNameLabel.isHidden = false
-            signUpButton.isEnabled = shouldEnabledButton()
-        }
-        
-        if signUpButton.isEnabled {
-            signUpButton.alpha = 1
-        } else {
-            signUpButton.alpha = 0.5
-        }
-        
-    }
-    
     @objc private func handleEmailTextChange() {
         signUpButton.isEnabled = shouldEnabledButton()
         guard let text = emailTextField.text else { return }
@@ -201,7 +138,6 @@ class SignUpView: UIView {
     
     @objc func handlerCreateUser() {
         signUpButton.startAnimation()
-        let fullname = fullNameTextField.text!
         let email = emailTextField.text!
         let password = passwordTextField.text!
         //let user = User(id: "", fullname: fullname, email: email, password: password)
@@ -237,10 +173,10 @@ class SignUpView: UIView {
     }
     
     private func shouldEnabledButton() -> Bool {
-        guard let fullname = fullNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
+        guard  let email = emailTextField.text, let password = passwordTextField.text else {
             return false
         }
-        return fullname.isEmpty || email.isEmpty || password.isEmpty ? false : true
+        return email.isEmpty || password.isEmpty ? false : true
     }
 
     
@@ -255,36 +191,24 @@ class SignUpView: UIView {
 
 }
 
-extension SignUpView: CodeView {
+extension StepSecoundSignUpView: CodeView {
     func buildViewHierarchy() {
-        self.addSubviews(titleCardLabel, subTitleCadLabel, infoCadLabel, containerStack, signUpButton)
-        containerStack.addArrangedSubviews(fullNameTextField, errorFullNameLabel, emailTextField, errorEmailLabel, passwordTextField, errorPasswordLabel)
+        self.addSubviews(infoCadLabel, containerStack, signUpButton)
+        containerStack.addArrangedSubviews(emailTextField, errorEmailLabel, passwordTextField, errorPasswordLabel)
     }
     
     func setupConstraints() {
-        //Title
-        NSLayoutConstraint.activate([
-            titleCardLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 50),
-            titleCardLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            titleCardLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            subTitleCadLabel.topAnchor.constraint(equalTo: titleCardLabel.bottomAnchor, constant: 16),
-            subTitleCadLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            subTitleCadLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20)
-        ])
         
         //Title
         NSLayoutConstraint.activate([
-            infoCadLabel.topAnchor.constraint(equalTo: subTitleCadLabel.bottomAnchor, constant: 50),
+            infoCadLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 70),
             infoCadLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             infoCadLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
         //StackView
         NSLayoutConstraint.activate([
-            containerStack.topAnchor.constraint(equalTo: infoCadLabel.bottomAnchor, constant: 20),
+            containerStack.topAnchor.constraint(equalTo: infoCadLabel.bottomAnchor, constant: 30),
             containerStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             containerStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
@@ -302,7 +226,7 @@ extension SignUpView: CodeView {
     }
 }
 
-extension SignUpView: UITextViewDelegate, UITextFieldDelegate {
+extension StepSecoundSignUpView: UITextViewDelegate, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -312,4 +236,3 @@ extension SignUpView: UITextViewDelegate, UITextFieldDelegate {
         self.endEditing(true)
     }
 }
-

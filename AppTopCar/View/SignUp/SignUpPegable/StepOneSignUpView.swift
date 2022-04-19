@@ -8,7 +8,7 @@
 import UIKit
 import TransitionButton
 
-class SignUpView: UIView {
+class StepOneSignUpView: UIView {
     
     private var safeArea: UILayoutGuide!
     
@@ -63,44 +63,20 @@ class SignUpView: UIView {
         return label
     }()
     
-    lazy private var foneTextField: UITextField = {
+    lazy private var phoneTextField: UITextField = {
         let email = CustomTexField()
         email.keyboardType = .emailAddress
-        email.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
+        email.addTarget(self, action: #selector(handlePhoneTextChange), for: .editingChanged)
         email.placeholder = "Celular"
+        email.keyboardType = .phonePad
         return email
     }()
     
-    lazy private var emailTextField: UITextField = {
-        let email = CustomTexField()
-        email.keyboardType = .emailAddress
-        email.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
-        email.placeholder = "E-mail"
-        return email
-    }()
-    
-    lazy var errorEmailLabel: UILabel = {
+    lazy var errorPhoneLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
-        label.text = "Digite um e-mail válido"
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = .red
-        return label
-    }()
-    
-    lazy private var passwordTextField: UITextField = {
-        let input = CustomTexField()
-        input.placeholder = "Senha"
-        input.isSecureTextEntry = true
-        input.addTarget(self, action: #selector(handlePasswordChange), for: .editingChanged)
-        return input
-    }()
-    
-    lazy var errorPasswordLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isHidden = true
+        label.text = "Digite um celular válido"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .red
         return label
@@ -109,7 +85,7 @@ class SignUpView: UIView {
     lazy var signUpButton: TransitionButton = {
         let button = TransactionCustomButton()
         button.setTitle("Continue", for: .normal)
-        button.addTarget(self, action: #selector(handlerCreateUser), for: .touchUpInside)
+        //button.addTarget(self, action: #selector(handlerCreateUser), for: .touchUpInside)
         button.isEnabled = false
         button.alpha = 0.5
         return button
@@ -148,18 +124,15 @@ class SignUpView: UIView {
         
     }
     
-    @objc private func handleEmailTextChange() {
-        signUpButton.isEnabled = shouldEnabledButton()
-        guard let text = emailTextField.text else { return }
-        if text.isValid(.email) {
-            
-            emailTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-            errorEmailLabel.isHidden = true
+    @objc private func handlePhoneTextChange() {
+        guard let text = phoneTextField.text else { return }
+        if text.isValid(.phone) {
+            phoneTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorPhoneLabel.isHidden = true
         } else {
-            emailTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
-            errorEmailLabel.isHidden = false
+            phoneTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorPhoneLabel.isHidden = false
             signUpButton.isEnabled = shouldEnabledButton()
-            signUpButton.alpha = 0.5
         }
         
         if signUpButton.isEnabled {
@@ -167,34 +140,6 @@ class SignUpView: UIView {
         } else {
             signUpButton.alpha = 0.5
         }
-        
-    }
-    
-    @objc private func handlePasswordChange() {
-        signUpButton.isEnabled = shouldEnabledButton()
-        guard let text = passwordTextField.text else { return }
-        if text.isValid(.password) {
-            
-            passwordTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-            errorPasswordLabel.isHidden = true
-        } else {
-            passwordTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
-            errorPasswordLabel.isHidden = false
-            signUpButton.isEnabled = false
-            
-            if text.count < 8 {
-                errorPasswordLabel.text = "A senha tem que ter no minimo 8 Caracteres"
-            } else {
-                errorPasswordLabel.text = "A senha tem que ter letra maiuscula, minuscula e números"
-            }
-        }
-        
-        if signUpButton.isEnabled {
-            signUpButton.alpha = 1
-        } else {
-            signUpButton.alpha = 0.5
-        }
-        
     }
     
     var handlerSignUpButton: (() -> Void)?
@@ -202,8 +147,7 @@ class SignUpView: UIView {
     @objc func handlerCreateUser() {
         signUpButton.startAnimation()
         let fullname = fullNameTextField.text!
-        let email = emailTextField.text!
-        let password = passwordTextField.text!
+        let phone = phoneTextField.text!
         //let user = User(id: "", fullname: fullname, email: email, password: password)
         
 //        UserService.shared.signUp(user: user) { result in
@@ -237,16 +181,16 @@ class SignUpView: UIView {
     }
     
     private func shouldEnabledButton() -> Bool {
-        guard let fullname = fullNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
+        guard let fullname = fullNameTextField.text, let phone = phoneTextField.text else {
             return false
         }
-        return fullname.isEmpty || email.isEmpty || password.isEmpty ? false : true
+        return fullname.isEmpty || phone.isEmpty ? false : true
     }
 
     
     private func delegates() {
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
+        fullNameTextField.delegate = self
+        phoneTextField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -255,10 +199,10 @@ class SignUpView: UIView {
 
 }
 
-extension SignUpView: CodeView {
+extension StepOneSignUpView: CodeView {
     func buildViewHierarchy() {
         self.addSubviews(titleCardLabel, subTitleCadLabel, infoCadLabel, containerStack, signUpButton)
-        containerStack.addArrangedSubviews(fullNameTextField, errorFullNameLabel, emailTextField, errorEmailLabel, passwordTextField, errorPasswordLabel)
+        containerStack.addArrangedSubviews(fullNameTextField, errorFullNameLabel, phoneTextField, errorPhoneLabel)
     }
     
     func setupConstraints() {
@@ -302,7 +246,7 @@ extension SignUpView: CodeView {
     }
 }
 
-extension SignUpView: UITextViewDelegate, UITextFieldDelegate {
+extension StepOneSignUpView: UITextViewDelegate, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

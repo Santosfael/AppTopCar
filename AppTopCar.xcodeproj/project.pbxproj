@@ -54,6 +54,9 @@
 		26A8E4D327F6169B00DC8B6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */; };
 		26A91700280C9B8400EB6D76 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A916FF280C9B8400EB6D76 /* Services.swift */; };
 		26A91702280C9C7C00EB6D76 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A91701280C9C7C00EB6D76 /* CategoryService.swift */; };
+		26FC058D280E23ED00525353 /* StepOneSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FC058C280E23ED00525353 /* StepOneSignUpView.swift */; };
+		26FC058F280E2B7400525353 /* StepSecoundSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FC058E280E2B7400525353 /* StepSecoundSignUpView.swift */; };
+		26FC0591280E2D5F00525353 /* StepThirdSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FC0590280E2D5F00525353 /* StepThirdSignUpView.swift */; };
 		3B7082CD0797583F7A36EB97 /* Pods_AppTopCar_AppTopCarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF6DE2A763E797DDA6A3CF3 /* Pods_AppTopCar_AppTopCarUITests.framework */; };
 		D9365748B69EC4ECB63738C2 /* Pods_AppTopCarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06194A569BE11CA93865D49F /* Pods_AppTopCarTests.framework */; };
 /* End PBXBuildFile section */
@@ -141,6 +144,9 @@
 		26A8E4D227F6169B00DC8B6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		26A916FF280C9B8400EB6D76 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		26A91701280C9C7C00EB6D76 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
+		26FC058C280E23ED00525353 /* StepOneSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneSignUpView.swift; sourceTree = "<group>"; };
+		26FC058E280E2B7400525353 /* StepSecoundSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSecoundSignUpView.swift; sourceTree = "<group>"; };
+		26FC0590280E2D5F00525353 /* StepThirdSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepThirdSignUpView.swift; sourceTree = "<group>"; };
 		28233397752204C9F8E6E0A7 /* Pods-AppTopCar-AppTopCarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTopCar-AppTopCarUITests.debug.xcconfig"; path = "Target Support Files/Pods-AppTopCar-AppTopCarUITests/Pods-AppTopCar-AppTopCarUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		637DD0FE7B631B89E38E192A /* Pods-AppTopCar-AppTopCarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTopCar-AppTopCarUITests.release.xcconfig"; path = "Target Support Files/Pods-AppTopCar-AppTopCarUITests/Pods-AppTopCar-AppTopCarUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6BF6DE2A763E797DDA6A3CF3 /* Pods_AppTopCar_AppTopCarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppTopCar_AppTopCarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +221,7 @@
 		263475D427F1F6ED0003B0FC /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				26FC058B280E23B800525353 /* SignUpPegable */,
 				263475EE27F254F40003B0FC /* SignUpViewController.swift */,
 				265FEF8D27F3573B009199F1 /* SignUpView.swift */,
 			);
@@ -473,6 +480,16 @@
 				265AAA9427EA11C000EFCC04 /* SceneDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		26FC058B280E23B800525353 /* SignUpPegable */ = {
+			isa = PBXGroup;
+			children = (
+				26FC058C280E23ED00525353 /* StepOneSignUpView.swift */,
+				26FC058E280E2B7400525353 /* StepSecoundSignUpView.swift */,
+				26FC0590280E2D5F00525353 /* StepThirdSignUpView.swift */,
+			);
+			path = SignUpPegable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -764,6 +781,7 @@
 				26A8E4D127F6142100DC8B6E /* UserService.swift in Sources */,
 				2680EDA727F74D7800DB139D /* TransactionCustomButton.swift in Sources */,
 				263475EB27F249C50003B0FC /* CustomHorizontalStackView.swift in Sources */,
+				26FC058F280E2B7400525353 /* StepSecoundSignUpView.swift in Sources */,
 				263475EF27F254F40003B0FC /* SignUpViewController.swift in Sources */,
 				26A8E4CF27F613AB00DC8B6E /* HTTPMethod.swift in Sources */,
 				263475ED27F254110003B0FC /* ForgotViewController.swift in Sources */,
@@ -781,11 +799,13 @@
 				26A91700280C9B8400EB6D76 /* Services.swift in Sources */,
 				263475E527F225CE0003B0FC /* ConfirmButton.swift in Sources */,
 				26525DB328088EED008A288C /* CategoryCollectionViewCell.swift in Sources */,
+				26FC058D280E23ED00525353 /* StepOneSignUpView.swift in Sources */,
 				2676D9412801276300F0982D /* MapNativeView.swift in Sources */,
 				263475E727F23C300003B0FC /* CustomLabel.swift in Sources */,
 				265FEF8E27F3573B009199F1 /* SignUpView.swift in Sources */,
 				263475DA27F1F76C0003B0FC /* UIView+extensions.swift in Sources */,
 				265AAA9527EA11C000EFCC04 /* SceneDelegate.swift in Sources */,
+				26FC0591280E2D5F00525353 /* StepThirdSignUpView.swift in Sources */,
 				265AAAC927EA14D900EFCC04 /* HomeViewController.swift in Sources */,
 				26A8E4CA27F6127F00DC8B6E /* User.swift in Sources */,
 				2676D92E2800EE6B00F0982D /* CustomTableViewCell.swift in Sources */,

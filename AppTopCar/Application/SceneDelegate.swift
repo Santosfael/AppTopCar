@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if FirebaseAuth.Auth.auth().currentUser != nil {
             viewController = TabBarViewController()
         } else {
-            viewController = SignInViewController()
+            viewController = SignUpViewController()
         }
         
         let navigation = UINavigationController(rootViewController: viewController)

@@ -9,7 +9,7 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
-    private let signUp = SignUpView()
+    private let signUp = StepThirdSignUpView()
     
     override func loadView() {
         super.loadView()

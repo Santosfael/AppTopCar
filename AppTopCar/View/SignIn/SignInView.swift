@@ -150,28 +150,28 @@ class SignInView: UIView {
         signInButton.startAnimation()
         let email = emailTextField.text!
         let password = passwordTextField.text!
-        let user = User(id: "", fullname: "", email: email, password: password)
-        UserService.shared.signIn(user: user) { result in
-            switch result {
-            case .success(let user):
-                UserDefaults.standard.set(user.email, forKey: "keyUserEmail")
-                UserDefaults.standard.set(user.fullname, forKey: "keyUserName")
-                
-                DispatchQueue.main.async {
-                    self.signInButton.stopAnimation()
-                    self.handleHomeButton?()
-                }
-                
-            case .failure(_):
-                DispatchQueue.main.async {
-                    self.signInButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 2) {
-                        self.alertInfo(title: "Login", message: "E-mail não cadastrado, ou e-mail e senha incorreto")
-                        self.signInButton.cornerRadius = 8
-                    }
-                }
-                
-            }
-        }
+        //let user = User(id: "", fullname: "", email: email, password: password)
+//        UserService.shared.signIn(user: user) { result in
+//            switch result {
+//            case .success(let user):
+//                UserDefaults.standard.set(user.email, forKey: "keyUserEmail")
+//                UserDefaults.standard.set(user.fullname, forKey: "keyUserName")
+//
+//                DispatchQueue.main.async {
+//                    self.signInButton.stopAnimation()
+//                    self.handleHomeButton?()
+//                }
+//
+//            case .failure(_):
+//                DispatchQueue.main.async {
+//                    self.signInButton.stopAnimation(animationStyle: .normal, revertAfterDelay: 2) {
+//                        self.alertInfo(title: "Login", message: "E-mail não cadastrado, ou e-mail e senha incorreto")
+//                        self.signInButton.cornerRadius = 8
+//                    }
+//                }
+//
+//            }
+//        }
     }
     
     @IBAction private func forgotHandlerButton() {

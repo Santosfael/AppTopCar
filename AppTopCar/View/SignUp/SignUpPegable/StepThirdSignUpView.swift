@@ -1,39 +1,20 @@
 //
-//  SignUpView.swift
+//  StepThirdSignUpView.swift
 //  AppTopCar
 //
-//  Created by Idwall Go Dev 008 on 29/03/22.
+//  Created by Idwall Go Dev 008 on 18/04/22.
 //
 
 import UIKit
 import TransitionButton
 
-class SignUpView: UIView {
+class StepThirdSignUpView: UIView {
     
     private var safeArea: UILayoutGuide!
     
-    lazy var titleCardLabel: CustomLabel = {
-        let label = CustomLabel()
-        label.text = "Crie uma conta gratuíta"
-        label.numberOfLines = 2
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        return label
-    }()
-    
-    lazy private var subTitleCadLabel: CustomLabel = {
-        let label = CustomLabel()
-        label.text = "Preencha as informações para criar uma conta e clique em continuar"
-        label.numberOfLines = 2
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
-        return label
-    }()
-    
     lazy private var infoCadLabel: CustomLabel = {
         let label = CustomLabel()
-        label.text = "01. Quem é você?"
+        label.text = "03. Endereço"
         label.numberOfLines = 2
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.90)
         label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
@@ -45,62 +26,81 @@ class SignUpView: UIView {
         return stack
     }()
     
-    lazy private var fullNameTextField: CustomTexField = {
+    lazy private var streetTextField: CustomTexField = {
         let text = CustomTexField()
         text.autocapitalizationType = .words
-        text.placeholder = "Seu nome completo"
-        text.addTarget(self, action: #selector(handleFullNameTextChange), for: .editingChanged)
+        text.placeholder = "Rua/ Avenida"
+        text.addTarget(self, action: #selector(handleStreetTextChange), for: .editingChanged)
         return text
     }()
     
-    lazy var errorFullNameLabel: UILabel = {
+    lazy var errorStreetLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
-        label.text = "Digite seu nome completo"
+        label.text = "Digite o nome rua ou avenida"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .red
         return label
     }()
     
-    lazy private var foneTextField: UITextField = {
-        let email = CustomTexField()
-        email.keyboardType = .emailAddress
-        email.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
-        email.placeholder = "Celular"
-        return email
+    lazy private var districtTextField: UITextField = {
+        let text = CustomTexField()
+        text.autocapitalizationType = .words
+        text.addTarget(self, action: #selector(handleDistrictTextChange), for: .editingChanged)
+        text.placeholder = "Bairro"
+        return text
     }()
     
-    lazy private var emailTextField: UITextField = {
-        let email = CustomTexField()
-        email.keyboardType = .emailAddress
-        email.addTarget(self, action: #selector(handleEmailTextChange), for: .editingChanged)
-        email.placeholder = "E-mail"
-        return email
-    }()
-    
-    lazy var errorEmailLabel: UILabel = {
+    lazy var errorDistrictLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
-        label.text = "Digite um e-mail válido"
+        label.text = "Digite um bairro"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .red
         return label
     }()
     
-    lazy private var passwordTextField: UITextField = {
-        let input = CustomTexField()
-        input.placeholder = "Senha"
-        input.isSecureTextEntry = true
-        input.addTarget(self, action: #selector(handlePasswordChange), for: .editingChanged)
-        return input
+    lazy private var cityTextField: UITextField = {
+        let text = CustomTexField()
+        text.autocapitalizationType = .words
+        text.addTarget(self, action: #selector(handleCityTextChange), for: .editingChanged)
+        text.placeholder = "Nome da cidade"
+        return text
     }()
     
-    lazy var errorPasswordLabel: UILabel = {
+    lazy var errorCityLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
+        label.text = "Digite o nome da cidade"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .red
+        return label
+    }()
+    
+    lazy private var complementTextField: UITextField = {
+        let text = CustomTexField()
+        text.autocapitalizationType = .words
+        text.placeholder = "Complemento, Exemplo: Casa fundo/AP."
+        return text
+    }()
+    
+    lazy private var zipCodeTextField: UITextField = {
+        let text = CustomTexField()
+        text.autocapitalizationType = .words
+        text.keyboardType = .numberPad
+        text.addTarget(self, action: #selector(handleZipCodeTextChange), for: .editingChanged)
+        text.placeholder = "CEP"
+        return text
+    }()
+    
+    lazy var errorZipCodeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.text = "Digite um CEP válido"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .red
         return label
@@ -108,8 +108,8 @@ class SignUpView: UIView {
     
     lazy var signUpButton: TransitionButton = {
         let button = TransactionCustomButton()
-        button.setTitle("Continue", for: .normal)
-        button.addTarget(self, action: #selector(handlerCreateUser), for: .touchUpInside)
+        button.setTitle("Finalizar", for: .normal)
+        //button.addTarget(self, action: #selector(handlerCreateUser), for: .touchUpInside)
         button.isEnabled = false
         button.alpha = 0.5
         return button
@@ -128,15 +128,16 @@ class SignUpView: UIView {
         self.frame.origin.y = keyboardShow.shared.keyboardWillHide(notification: notification)
     }
     
-    @objc private func handleFullNameTextChange() {
-        guard let text = fullNameTextField.text else { return }
-        if text.isValid(.fullName) {
+    @objc private func handleStreetTextChange() {
+        guard let text = streetTextField.text else { return }
+        if !text.isEmpty {
             
-            fullNameTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-            errorFullNameLabel.isHidden = true
+            streetTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorStreetLabel.isHidden = true
+            signUpButton.isEnabled = shouldEnabledButton()
         } else {
-            fullNameTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
-            errorFullNameLabel.isHidden = false
+            streetTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorStreetLabel.isHidden = false
             signUpButton.isEnabled = shouldEnabledButton()
         }
         
@@ -148,18 +149,16 @@ class SignUpView: UIView {
         
     }
     
-    @objc private func handleEmailTextChange() {
-        signUpButton.isEnabled = shouldEnabledButton()
-        guard let text = emailTextField.text else { return }
-        if text.isValid(.email) {
-            
-            emailTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-            errorEmailLabel.isHidden = true
-        } else {
-            emailTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
-            errorEmailLabel.isHidden = false
+    @objc private func handleDistrictTextChange() {
+        guard let text = districtTextField.text else { return }
+        if text.isValid(.zipCode) {
+            districtTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorDistrictLabel.isHidden = true
             signUpButton.isEnabled = shouldEnabledButton()
-            signUpButton.alpha = 0.5
+        } else {
+            districtTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorDistrictLabel.isHidden = false
+            signUpButton.isEnabled = shouldEnabledButton()
         }
         
         if signUpButton.isEnabled {
@@ -167,26 +166,18 @@ class SignUpView: UIView {
         } else {
             signUpButton.alpha = 0.5
         }
-        
     }
     
-    @objc private func handlePasswordChange() {
-        signUpButton.isEnabled = shouldEnabledButton()
-        guard let text = passwordTextField.text else { return }
-        if text.isValid(.password) {
-            
-            passwordTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-            errorPasswordLabel.isHidden = true
+    @objc private func handleCityTextChange() {
+        guard let text = districtTextField.text else { return }
+        if !text.isEmpty {
+            cityTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorCityLabel.isHidden = true
+            signUpButton.isEnabled = shouldEnabledButton()
         } else {
-            passwordTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
-            errorPasswordLabel.isHidden = false
-            signUpButton.isEnabled = false
-            
-            if text.count < 8 {
-                errorPasswordLabel.text = "A senha tem que ter no minimo 8 Caracteres"
-            } else {
-                errorPasswordLabel.text = "A senha tem que ter letra maiuscula, minuscula e números"
-            }
+            cityTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorCityLabel.isHidden = false
+            signUpButton.isEnabled = shouldEnabledButton()
         }
         
         if signUpButton.isEnabled {
@@ -194,16 +185,33 @@ class SignUpView: UIView {
         } else {
             signUpButton.alpha = 0.5
         }
+    }
+    
+    @objc private func handleZipCodeTextChange() {
+        guard let text = districtTextField.text else { return }
+        if !text.isEmpty {
+            cityTextField.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
+            errorCityLabel.isHidden = true
+            signUpButton.isEnabled = shouldEnabledButton()
+        } else {
+            cityTextField.backgroundColor = UIColor(red: 0.72, green: 0.00, blue: 0.00, alpha: 0.2)
+            errorCityLabel.isHidden = false
+            signUpButton.isEnabled = shouldEnabledButton()
+        }
         
+        if signUpButton.isEnabled {
+            signUpButton.alpha = 1
+        } else {
+            signUpButton.alpha = 0.5
+        }
     }
     
     var handlerSignUpButton: (() -> Void)?
     
     @objc func handlerCreateUser() {
         signUpButton.startAnimation()
-        let fullname = fullNameTextField.text!
-        let email = emailTextField.text!
-        let password = passwordTextField.text!
+        let fullname = streetTextField.text!
+        let phone = districtTextField.text!
         //let user = User(id: "", fullname: fullname, email: email, password: password)
         
 //        UserService.shared.signUp(user: user) { result in
@@ -237,16 +245,19 @@ class SignUpView: UIView {
     }
     
     private func shouldEnabledButton() -> Bool {
-        guard let fullname = fullNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text else {
+        guard let street = streetTextField.text,
+                let district = districtTextField.text,
+                let city = cityTextField.text,
+                let zipCode = zipCodeTextField.text else {
             return false
         }
-        return fullname.isEmpty || email.isEmpty || password.isEmpty ? false : true
+        return street.isEmpty || district.isEmpty || city.isEmpty || zipCode.isEmpty ? false : true
     }
 
     
     private func delegates() {
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
+        streetTextField.delegate = self
+        districtTextField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -255,29 +266,26 @@ class SignUpView: UIView {
 
 }
 
-extension SignUpView: CodeView {
+extension StepThirdSignUpView: CodeView {
     func buildViewHierarchy() {
-        self.addSubviews(titleCardLabel, subTitleCadLabel, infoCadLabel, containerStack, signUpButton)
-        containerStack.addArrangedSubviews(fullNameTextField, errorFullNameLabel, emailTextField, errorEmailLabel, passwordTextField, errorPasswordLabel)
+        self.addSubviews(infoCadLabel, containerStack, signUpButton)
+        containerStack.addArrangedSubviews(streetTextField,
+                                           errorStreetLabel,
+                                           districtTextField,
+                                           errorDistrictLabel,
+                                           cityTextField,
+                                           errorCityLabel,
+                                           complementTextField,
+                                           zipCodeTextField,
+                                           errorZipCodeLabel
+        )
     }
     
     func setupConstraints() {
-        //Title
-        NSLayoutConstraint.activate([
-            titleCardLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 50),
-            titleCardLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            titleCardLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            subTitleCadLabel.topAnchor.constraint(equalTo: titleCardLabel.bottomAnchor, constant: 16),
-            subTitleCadLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            subTitleCadLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20)
-        ])
         
         //Title
         NSLayoutConstraint.activate([
-            infoCadLabel.topAnchor.constraint(equalTo: subTitleCadLabel.bottomAnchor, constant: 50),
+            infoCadLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 50),
             infoCadLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             infoCadLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
@@ -302,7 +310,7 @@ extension SignUpView: CodeView {
     }
 }
 
-extension SignUpView: UITextViewDelegate, UITextFieldDelegate {
+extension StepThirdSignUpView: UITextViewDelegate, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -312,4 +320,3 @@ extension SignUpView: UITextViewDelegate, UITextFieldDelegate {
         self.endEditing(true)
     }
 }
-

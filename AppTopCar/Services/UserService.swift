@@ -27,7 +27,7 @@ class UserService: UserServiceProtocol {
                     if error != nil {
                         print("erro ao logar")
                     } else {
-                        completion(.success(User(id: "", fullname: result!.get("fullname") as! String, email: user.email, password: "")))
+                        //completion(.success(User(id: "", fullname: result!.get("fullname") as! String, email: user.email, password: "")))
                     }
                 }
                 
@@ -49,7 +49,7 @@ class UserService: UserServiceProtocol {
                     }
                 }
                 //self.infoUser = User(id: "", fullname: user.fullname, email: user.email, password: "")
-                completion(.success(User(id: "", fullname: user.fullname, email: user.email, password: "")))
+                //completion(.success(User(id: "", fullname: user.fullname, email: user.email, password: "")))
             }
         }
     }
@@ -59,7 +59,7 @@ class UserService: UserServiceProtocol {
             if error != nil {
                 completion(.failure(.error("E-mail não existe")))
             } else {
-                completion(.success(User(id: "", fullname: "", email: email, password: "")))
+                //completion(.success(User(id: "", fullname: "", email: email, password: "")))
             }
         }
     }
